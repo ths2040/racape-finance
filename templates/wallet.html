@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+    <h1 class="headline-total">Wallet: ${{wallet_total }}</h1>
+
+    <!-- http://getbootstrap.com/docs/4.1/content/typography/ -->
+    <h1 class="white wallet-header">Update Wallet</h1>
+
+    <!-- http://getbootstrap.com/docs/4.1/components/forms/ -->
+    <form class="needs-validation" novalidate action="/update_wallet" method="post">
+      <div class="form-row wallet-header">
+
+        <!--new total--->
+        <div class="col-md-3 mb-3">
+          <label for="validationCustom01">New Total</label>
+            <input name="new_amount" type="text" class="form-control" id="validationCustom01" placeholder="New Total Amount" >
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please provide the new dollar amount
+              </div>
+        </div>
+
+        <!--deposit--->
+        <div class="col-md-3 mb-3">
+          <label for="validationCustom01">Deposit</label>
+            <input name="deposit" type="text" class="form-control" id="validationCustom01" placeholder="Deposit Amount" >
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please provide the new dollar amount
+              </div>
+        </div>
+
+        <!--withdrawal--->
+        <div class="col-md-3 mb-3">
+          <label for="validationCustom01">Withdrawl</label>
+            <input name="withdrawl" type="text" class="form-control" id="validationCustom01" placeholder="Withdrawl Amount" >
+              <div class="valid-feedback">
+                Looks good!
+              </div>
+              <div class="invalid-feedback">
+                Please provide the new dollar amount
+              </div>
+        </div>
+
+
+        <!--submit button--->
+        <!-- http://getbootstrap.com/docs/4.1/components/buttons/ -->
+        <button class="btn btn-primary button-height" type="submit">Submit</button>
+
+    <!--graph--->
+    <div id='myChart' class="chart--container"></div>
+      <script>
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+
+        //zing chart js
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig = {
+          "type": "area",
+
+          "background-color": "#212121",
+
+          "scale-x": {
+                "transform": {
+                    "type": 'date',
+                    "all": '%m/%d/%y<br>%h:%i %A'
+                  }
+          },
+
+          "plot": {
+            "animation": {
+              "effect": 'ANIMATION_EXPAND_VERTICAL',
+              "method": 'ANIMATION_REGULAR_EASE_OUT',
+              "sequence": 'ANIMATION_BY_PLOT',
+              "speed": 500
+            },
+            "marker": {
+            "size": 1,
+            "visible": false
+          },
+          },
+
+          "series": [{
+            "values": {{data}},
+            "line-color": "#fc8d62",
+            "background-color": "#fc8d62",
+            "aspect": "spline",
+
+          }]
+        };
+
+        zingchart.render({
+          id: 'myChart',
+          data: myConfig,
+          height: '75%',
+          width: '100%'
+        });
+      </script>
+
+{% endblock %}

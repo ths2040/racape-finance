@@ -1,0 +1,179 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+<h1 class="headline-total">Total Balances</h1>
+
+<div id='savings' class="chart--container"><a class="zc-ref" href="https://www.zingchart.com/">Charts by ZingChart</a></div>
+  <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    var myConfig = {
+      "globals": {
+        "font-family": "Nunito Sans"
+      },
+      "graphset": [{
+        "type": "area",
+        "background-color": "#212121",
+        "utc": true,
+
+        "plotarea": {
+          "margin-top": "10%",
+          "margin-right": "dynamic",
+          "margin-bottom": "dynamic",
+          "margin-left": "dynamic",
+          "adjust-layout": true
+        },
+        "labels": [{
+            "text": "Stocks: %plot-0-value",
+            "default-value": "",
+            "color": "#66c2a5",
+            "x": "20%",
+            "y": 50,
+            "width": 120,
+            "text-align": "left",
+            "bold": 0,
+            "font-size": "14px",
+            "font-weight": "bold"
+          },
+          {
+            "text": "Savings: %plot-1-value",
+            "default-value": "",
+            "color": "#8da0cb",
+            "x": "45%",
+            "y": 50,
+            "width": 120,
+            "text-align": "left",
+            "bold": 0,
+            "font-size": "14px",
+            "font-weight": "bold"
+          },
+          {
+            "text": "Wallet: %plot-2-value",
+            "default-value": "",
+            "color": "#fc8d62",
+            "x": "70%",
+            "y": 50,
+            "width": 120,
+            "text-align": "left",
+            "bold": 0,
+            "font-size": "14px",
+            "font-weight": "bold"
+          }
+        ],
+        "scale-x": {
+          "label": {
+            "text": "Date Range",
+            "font-size": "14px",
+            "font-weight": "normal",
+            "offset-x": "10%",
+            "font-angle": 360,
+            "color": "#fff"
+          },
+          "item": {
+            "text-align": "center",
+            "font-color": "#fff"
+          },
+          "transform": {
+              "type": 'date',
+              "all": '%m/%d/%y<br>%h:%i %A'
+          },
+          "zooming": 1,
+          "max-labels": 12,
+          "items-overlap": false,
+          "guide": {
+            "line-width": "0px"
+          },
+          "tick": {
+            "line-width": "2px"
+          },
+        },
+        "crosshair-x": {
+          "line-color": "#fff",
+          "line-width": 1,
+          "plot-label": {
+            "visible": false
+          }
+        },
+        "scale-y": {
+          "values": "0:8000:500",
+          "item": {
+            "font-color": "#fff",
+            "font-weight": "normal"
+          },
+          "label": {
+            "text": "Metrics",
+            "font-size": "14px",
+            "color": "#fff"
+          },
+          "guide": {
+            "line-width": "0px",
+            "alpha": 0.2,
+            "line-style": "dashed"
+          }
+        },
+        "plot": {
+          "line-width": 2,
+          "marker": {
+            "size": 1,
+            "visible": false
+          },
+          "animation": {
+              "effect": 'ANIMATION_EXPAND_VERTICAL',
+              "method": 'ANIMATION_REGULAR_EASE_OUT',
+              "sequence": 'ANIMATION_BY_PLOT',
+              "speed": 500
+          },
+          "tooltip": {
+            "font-family": "Roboto",
+            "font-size": "15px",
+            "text": "$%v in %t on %data-days",
+            "text-align": "left",
+            "border-radius": 5,
+            "padding": 10
+          },
+        },
+        "series": [
+          {
+
+            "values": {{ stock_data }},
+            "line-color": "#66c2a5",
+            "aspect": "spline",
+            "background-color": "#66c2a5",
+            "alpha-area": ".3",
+            "font-family": "Roboto",
+            "font-size": "14px",
+            "text": "Stocks",
+          },
+          {
+            "values": {{ savings_data }},
+            "line-color": "#8da0cb",
+            "aspect": "spline",
+            "background-color": "#8da0cb",
+            "alpha-area": ".3",
+            "font-family": "Roboto",
+            "font-size": "14px",
+            "text": "Savings"
+          },
+          {
+            "values": {{ wallet_data }},
+            "line-color": "#fc8d62",
+            "aspect": "spline",
+            "background-color": "#fc8d62",
+            "alpha-area": ".3",
+            "font-family": "Roboto",
+            "font-size": "14px",
+            "text": "Savings"
+          }
+        ]
+      }]
+    };
+
+    zingchart.render({
+      id: 'savings',
+      data: myConfig,
+      height: '100%',
+      width: '100%'
+    });
+  </script>
+
+{% endblock %}

@@ -1,0 +1,279 @@
+{% extends "layout.html" %}
+
+{% block main %}
+
+
+<div id='myChart' class="chart--container"><a class="zc-ref" href="https://www.zingchart.com/">Charts by ZingChart</a></div>
+  <script>
+    ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+    var myConfig = {
+      "globals": {
+        "font-family": "Nunito Sans"
+      },
+      "graphset": [{
+        "type": "area",
+        "background-color": "#212121",
+        "utc": true,
+        "title": {
+          "y": "15px",
+          "text": "Total Balances",
+          "background-color": "none",
+          "font-color": "#fff",
+          "font-size": "24px",
+          "height": "25px",
+          "adjust-layout": true
+        },
+        "plotarea": {
+          "margin-top": "10%",
+          "margin-right": "dynamic",
+          "margin-bottom": "dynamic",
+          "margin-left": "dynamic",
+          "adjust-layout": true
+        },
+        "labels": [{
+            "text": "Total: %plot-2-value",
+            "default-value": "",
+            "color": "#8da0cb",
+            "x": "20%",
+            "y": 50,
+            "width": 120,
+            "text-align": "left",
+            "bold": 0,
+            "font-size": "14px",
+            "font-weight": "bold"
+          },
+          {
+            "text": "Stocks: %plot-1-value",
+            "default-value": "",
+            "color": "#66c2a5",
+            "x": "45%",
+            "y": 50,
+            "width": 120,
+            "text-align": "left",
+            "bold": 0,
+            "font-size": "14px",
+            "font-weight": "bold"
+          },
+          {
+            "text": "Savings: %plot-0-value",
+            "default-value": "",
+            "color": "#fc8d62",
+            "x": "70%",
+            "y": 50,
+            "width": 120,
+            "text-align": "left",
+            "bold": 0,
+            "font-size": "14px",
+            "font-weight": "bold"
+          }
+        ],
+        "scale-x": {
+          "label": {
+            "text": "Date Range",
+            "font-size": "14px",
+            "font-weight": "normal",
+            "offset-x": "10%",
+            "font-angle": 360,
+            "color": "#fff"
+          },
+          "item": {
+            "text-align": "center",
+            "font-color": "#fff"
+          },
+          "zooming": 1,
+          "max-labels": 12,
+          "labels": [
+            "Sept<br>19",
+            "Sept<br>20",
+            "Sept<br>21",
+            "Sept<br>22",
+            "Sept<br>23",
+            "Sept<br>24",
+            "Sept<br>25",
+            "Sept<br>26",
+            "Sept<br>27",
+            "Sept<br>28",
+            "Sept<br>29",
+            "Sept<br>30"
+          ],
+          "max-items": 12,
+          "items-overlap": true,
+          "guide": {
+            "line-width": "0px"
+          },
+          "tick": {
+            "line-width": "2px"
+          },
+        },
+        "crosshair-x": {
+          "line-color": "#fff",
+          "line-width": 1,
+          "plot-label": {
+            "visible": false
+          }
+        },
+        "scale-y": {
+          "values": "0:2500:500",
+          "item": {
+            "font-color": "#fff",
+            "font-weight": "normal"
+          },
+          "label": {
+            "text": "Metrics",
+            "font-size": "14px",
+            "color": "#fff"
+          },
+          "guide": {
+            "line-width": "0px",
+            "alpha": 0.2,
+            "line-style": "dashed"
+          }
+        },
+        "plot": {
+          "line-width": 2,
+          "marker": {
+            "size": 1,
+            "visible": false
+          },
+          "tooltip": {
+            "font-family": "Roboto",
+            "font-size": "15px",
+            "text": "$%v in %t on %data-days",
+            "text-align": "left",
+            "border-radius": 5,
+            "padding": 10
+          },
+          "animation": {
+              "effect": 'ANIMATION_EXPAND_VERTICAL',
+              "method": 'ANIMATION_REGULAR_EASE_OUT',
+              "sequence": 'ANIMATION_BY_PLOT',
+              "speed": 500
+            }
+        },
+        "series": [{
+            "values": {{ stock_data }},
+            "line-color": "#fc8d62",
+            "aspect": "spline",
+            "background-color": "#fc8d62",
+            "alpha-area": ".3",
+            "font-family": "Roboto",
+            "font-size": "14px",
+            "text": "Savings"
+          },
+          {
+            "values": {{ savings_data }},
+            "line-color": "#66c2a5",
+            "background-color": "#66c2a5",
+            "alpha-area": ".3",
+            "text": "Stocks",
+            "aspect": "spline",
+            "font-family": "Roboto",
+            "font-size": "14px"
+          },
+          {
+            "values": {{ savings_data }},
+            "line-color": "#8da0cb",
+            "background-color": "#8da0cb",
+            "aspect": "spline",
+            "alpha-area": "0.2",
+            "text": "Total",
+            "font-family": "Roboto",
+            "font-size": "14px"
+          }
+
+          /*{
+            "values": "{{ test_values }}",
+            "data-days": "{{ test_dates }}",
+            "line-color": "##ff4d55",
+            "aspect": "spline",
+            "background-color": "#ff4d55",
+            "alpha-area": ".3",
+            "font-family": "Roboto",
+            "font-size": "14px",
+            "text": "Test"
+          }*/
+        ]
+      }]
+    };
+
+    zingchart.render({
+      id: 'myChart',
+      data: myConfig,
+      height: '100%',
+      width: '100%'
+    });
+  </script>
+
+      <!--graph--->
+    <div id='myChart' class="chart--container"></div>
+      <script>
+
+        // Example starter JavaScript for disabling form submissions if there are invalid fields
+        (function() {
+          'use strict';
+          window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+              form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                  event.preventDefault();
+                  event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+              }, false);
+            });
+          }, false);
+        })();
+
+
+
+        //zing chart js
+        ZC.LICENSE = ["569d52cefae586f634c54f86dc99e6a9", "b55b025e438fa8a98e32482b5f768ff5"];
+        var myConfig = {
+          "type": "area",
+
+          "background-color": "#212121",
+
+          "scale-x": {
+                  "transform": {
+                    "type": 'date',
+                    "all": '%m/%d/%y<br>%h:%i %A'
+                  }
+          },
+
+          "plot": {
+            "animation": {
+              "effect": 'ANIMATION_EXPAND_VERTICAL',
+              "method": 'ANIMATION_REGULAR_EASE_OUT',
+              "sequence": 'ANIMATION_BY_PLOT',
+              "speed": 500
+            }
+          },
+
+          "series": [{
+            "values": {{wallet_data}},
+            "line-color": "#8da0cb",
+            "background-color": "#8da0cb",
+            "aspect": "spline",
+          //}
+          //{  "values": {{wallet_data}},
+          //  "line-color": "#8da0cb",
+          //  "background-color": "#8da0cb",
+          //  "aspect": "spline",
+
+          //}
+          }]
+        };
+
+        zingchart.render({
+          id: 'myChart',
+          data: myConfig,
+          height: '75%',
+          width: '100%'
+        });
+      </script>
+
+
+{% endblock %}
